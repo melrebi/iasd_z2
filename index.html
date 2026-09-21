@@ -25,14 +25,14 @@
         }
 
         header {
-            background-color: #ffffff; /* Fondo blanco para que el logo resalte bien */
+            background-color: #ffffff;
             text-align: center;
             padding: 30px 20px 20px 20px;
             border-bottom: 3px solid var(--gn-black);
         }
 
         header img {
-            max-width: 250px; /* Tamaño ajustado para que sea el protagonista */
+            max-width: 250px;
             width: 100%;
             height: auto;
             margin: 0 auto;
@@ -122,7 +122,7 @@
             z-index: 10; 
             box-shadow: 4px 0px 10px rgba(0,0,0,0.3);
             flex-shrink: 0;
-            border: 2px solid var(--gn-light-grey); /* Pequeño borde para separar visualmente */
+            border: 2px solid var(--gn-light-grey);
         }
 
         .day-circle .day-name {
@@ -179,20 +179,6 @@
         .detail-value {
             font-weight: normal;
             font-size: 1.05rem;
-        }
-
-        /* --- Footer Logo --- */
-        .footer-logo {
-            text-align: right;
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px dashed var(--gn-mauve);
-        }
-
-        .footer-logo img {
-            max-width: 150px;
-            height: auto;
-            opacity: 0.9;
         }
 
         /* --- BOTONES MINIMALISTAS --- */
@@ -286,6 +272,18 @@
         .dropdown-item:hover { background-color: var(--gn-light-grey); }
         .dropdown-item svg { color: var(--gn-dark-brown); }
 
+        /* --- Footer Logo --- */
+        .footer-logo {
+            text-align: center;
+            margin-top: 50px;
+            opacity: 0.9;
+        }
+
+        .footer-logo img {
+            max-width: 150px;
+            height: auto;
+        }
+
         @media (max-width: 500px) {
             header img { max-width: 200px; }
             .day-circle { width: 90px; height: 90px; }
@@ -302,7 +300,6 @@
 <body>
 
     <header>
-        <!-- Logo IASD Zona 2 sin texto -->
         <img src="logo-iasdz2.png" alt="Logo IASD Zona 2">
     </header>
 
@@ -367,11 +364,6 @@
                         </div>
                     </div>
                 </div>
-                
-                <!-- Logo Final en el área de captura -->
-                <div class="footer-logo">
-                    <img src="ESP-logo1-1v27.png" alt="UnaVoz27">
-                </div>
 
             </div> <!-- Fin capture-area -->
 
@@ -396,18 +388,24 @@
                     </div>
                 </div>
                 
-                <a class="btn-action btn-pdf" href="https://docs.google.com/spreadsheets/d/1AyClkcgYEPakLdg_j04QPg_S7cJkgW_eOEeYexUYQu8/export?format=pdf" target="_blank" rel="noopener noreferrer">
+                <!-- NUEVO ENLACE DIRECTO DE GOOGLE DRIVE PARA EL PDF -->
+                <a class="btn-action btn-pdf" href="https://drive.google.com/uc?export=download&id=1WwzU8hUNQHeNPgLz-NzEgAG_hDlSWe6l" target="_blank" rel="noopener noreferrer">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><polyline points="9 15 12 18 15 15"></polyline></svg>
                     <span>Itinerario PDF</span>
                 </a>
+            </div>
+
+            <!-- LOGO UNAVOZ27 HASTA EL FINAL DE LA PÁGINA -->
+            <div class="footer-logo">
+                <img src="ESP-logo1-1v27.png" alt="UnaVoz27">
             </div>
 
         </div> 
     </div>
 
     <script>
-        // ¡REEMPLAZA ESTA URL CON TU ENLACE!
-        const API_URL = 'https://script.google.com/macros/s/AKfycbxrLT5HCUdyrG2ymEwu1x1mE8O0jxWHuA1bpnHEo4HNUxmVsoTtCTcsjFrNOmCOli67Fg/exec';    
+        // Enlace de Apps Script funcionando correctamente
+        const API_URL = 'https://script.google.com/macros/s/AKfycbxrLT5HCUdyrG2ymEwu1x1mE8O0jxWHuA1bpnHEo4HNUxmVsoTtCTcsjFrNOmC0li67Fg/exec';    
         
         let semanasData = [];
 
@@ -569,7 +567,6 @@
             textoBoton.textContent = 'Generando...';
 
             try {
-                // Color de fondo acorde a la paleta Gothic Noir
                 const canvas = await html2canvas(areaCaptura, {
                     scale: 2, 
                     backgroundColor: '#D1D0D0', 
