@@ -1,1 +1,644 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Itinerario IASD Zona 2</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        /* --- ESTILOS IASD --- */
+        :root {
+            --bg-page: #f0f4f8; 
+            --navy-dark: #1b2a41; 
+            --navy-medium: #2b3d5b; 
+            --navy-light: #344a6e;
+            --text-white: #ffffff;
+            --text-label: #a9b7cf; 
+            --iasd-teal: #3b8a8b;
+            --iasd-gold: #cfa86a;
+        }
 
+        body {
+            font-family: 'Noto Sans', 'Open Sans', Arial, sans-serif;
+            background-color: var(--bg-page);
+            color: var(--navy-dark);
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: var(--navy-dark);
+            text-align: center;
+            padding: 30px 20px;
+            color: var(--text-white);
+        }
+
+        header img {
+            max-width: 90px;
+            background: white;
+            padding: 8px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            line-height: 1.4;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 15px;
+            padding-bottom: 50px;
+        }
+
+        .controls {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        select {
+            padding: 12px 15px;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            border: 2px solid #ddd;
+            background-color: #fff;
+            color: var(--navy-dark);
+            width: 100%;
+            max-width: 350px;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        select optgroup {
+            font-weight: bold;
+            color: var(--navy-dark);
+            background-color: #eee;
+        }
+
+        .capture-area {
+            background-color: var(--bg-page);
+            padding: 20px 10px;
+            border-radius: 8px;
+        }
+
+        .anciano-banner {
+            background-color: var(--navy-light);
+            color: var(--text-white);
+            padding: 12px 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-bottom: 3px solid var(--iasd-gold);
+        }
+
+        .anciano-banner span:first-child {
+            color: var(--text-label);
+            font-weight: normal;
+            font-size: 1rem;
+            text-transform: uppercase;
+            margin-right: 10px;
+        }
+
+        .anciano-banner span:last-child {
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        .day-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .day-circle {
+            background-color: var(--navy-dark);
+            color: var(--text-white);
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            z-index: 10; 
+            box-shadow: 4px 0px 10px rgba(0,0,0,0.3);
+            flex-shrink: 0;
+        }
+
+        .day-circle .day-name {
+            font-size: 1.1rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 2px;
+        }
+
+        .day-circle .day-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            line-height: 1;
+        }
+        
+        .day-circle .day-month {
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .day-content {
+            background-color: var(--navy-medium);
+            color: var(--text-white);
+            margin-left: -55px;
+            padding: 25px 20px 25px 70px;
+            border-radius: 0 12px 12px 0;
+            flex-grow: 1;
+            position: relative;
+            z-index: 1;
+            min-height: 90px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: max-content 1fr;
+            gap: 8px 15px;
+            width: 100%;
+        }
+
+        .detail-label {
+            color: var(--text-label);
+            font-weight: bold;
+            text-align: right;
+            font-size: 1rem;
+        }
+
+        .detail-value {
+            font-weight: normal;
+            font-size: 1.05rem;
+        }
+
+        /* --- BOTONES MINIMALISTAS --- */
+        .share-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px; 
+            flex-wrap: wrap; 
+            margin-top: 40px;
+        }
+
+        .btn-action {
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .btn-share-main {
+            background-color: var(--iasd-teal);
+            box-shadow: 0 4px 15px rgba(59, 138, 139, 0.4);
+        }
+        .btn-share-main:hover { background-color: #2e6c6d; transform: translateY(-2px); }
+
+        .btn-pdf {
+            background-color: var(--navy-dark);
+            box-shadow: 0 4px 15px rgba(27, 42, 65, 0.4);
+        }
+        .btn-pdf:hover { background-color: #0d1624; transform: translateY(-2px); }
+
+        .btn-action:disabled {
+            background-color: #aab;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Estilos del Dropdown */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            bottom: 115%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #ffffff;
+            min-width: 210px;
+            box-shadow: 0px 8px 24px rgba(0,0,0,0.15);
+            border-radius: 12px;
+            z-index: 100;
+            overflow: hidden;
+            border: 1px solid #eaeaea;
+        }
+
+        .dropdown-content.show { display: flex; flex-direction: column; }
+
+        .dropdown-item {
+            padding: 15px 20px;
+            color: var(--navy-dark);
+            font-size: 1rem;
+            font-weight: bold;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            border-bottom: 1px solid #f0f0f0;
+            transition: background-color 0.2s;
+        }
+
+        .dropdown-item:last-child { border-bottom: none; }
+        .dropdown-item:hover { background-color: var(--bg-page); }
+        .dropdown-item svg { color: var(--iasd-teal); }
+
+        @media (max-width: 500px) {
+            .day-circle { width: 90px; height: 90px; }
+            .day-circle .day-number { font-size: 2rem; }
+            .day-circle .day-name { font-size: 0.9rem; }
+            .day-content { margin-left: -45px; padding-left: 55px; }
+            .detail-grid { grid-template-columns: 1fr; gap: 2px; }
+            .detail-label { text-align: left; font-size: 0.85rem; margin-top: 5px;}
+            .detail-value { font-size: 1rem; margin-bottom: 5px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 5px;}
+            .detail-value:last-child { border-bottom: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <img src="logo_iasd.png" alt="Logo IASD">
+        <h1>IGLESIA ADVENTISTA DEL SÉPTIMO DÍA<br>ZONA 2</h1>
+    </header>
+
+    <div class="container">
+        
+        <div class="controls">
+            <select id="week-selector">
+                <option value="">Cargando semanas...</option>
+            </select>
+        </div>
+
+        <div id="main-content" style="display:none;">
+            
+            <div class="capture-area" id="capture-area">
+                
+                <div class="anciano-banner">
+                    <span>Director(a) del Sábado:</span> 
+                    <span id="director-sabado">Cargando...</span>
+                </div>
+
+                <!-- MIÉRCOLES -->
+                <div class="day-row" id="row-miercoles">
+                    <div class="day-circle">
+                        <div class="day-name">MIÉ</div>
+                        <div class="day-number" id="num-miercoles">--</div>
+                        <div class="day-month" id="mes-miercoles">--</div>
+                    </div>
+                    <div class="day-content">
+                        <div class="detail-grid">
+                            <div class="detail-label">Predicador:</div>
+                            <div class="detail-value" id="pred-miercoles">--</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SÁBADO -->
+                <div class="day-row" id="row-sabado">
+                    <div class="day-circle">
+                        <div class="day-name">SÁB</div>
+                        <div class="day-number" id="num-sabado">--</div>
+                        <div class="day-month" id="mes-sabado">--</div>
+                    </div>
+                    <div class="day-content">
+                        <div class="detail-grid">
+                            <div class="detail-label">Culto Divino:</div>
+                            <div class="detail-value" id="pred-sabado">--</div>
+
+                            <div class="detail-label">Prog. Esc. Sabática:</div>
+                            <div class="detail-value" id="prog-es">--</div>
+
+                            <div class="detail-label">Maestro Esc. Sab.:</div>
+                            <div class="detail-value" id="maestro-es">--</div>
+
+                            <div class="detail-label">Maestra de Niños:</div>
+                            <div class="detail-value" id="maestra-ninos">--</div>
+
+                            <div class="detail-label">Preludio Musical:</div>
+                            <div class="detail-value" id="preludio">--</div>
+
+                            <div class="detail-label">Soc. de Jóvenes:</div>
+                            <div class="detail-value" id="sociedad-jovenes">--</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div> <!-- Fin capture-area -->
+
+            <!-- CONTENEDOR DE BOTONES -->
+            <div class="share-container">
+                
+                <div class="dropdown">
+                    <button class="btn-action btn-share-main" onclick="toggleDropdown()" id="btn-share-main">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                        <span id="share-text-main">Compartir</span>
+                    </button>
+                    
+                    <div class="dropdown-content" id="shareDropdown">
+                        <div class="dropdown-item" onclick="compartirComoImagen()">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                            Compartir Imagen
+                        </div>
+                        <div class="dropdown-item" onclick="compartirComoTexto()">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                            Compartir Texto
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- BOTÓN PDF APUNTANDO A LA NUEVA HOJA (ZONA 2) -->
+                <a class="btn-action btn-pdf" href="https://docs.google.com/spreadsheets/d/1AyClkcgYEPakLdg_j04QPg_S7cJkgW_eOEeYexUYQu8/export?format=pdf" target="_blank" rel="noopener noreferrer">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><polyline points="9 15 12 18 15 15"></polyline></svg>
+                    <span>Itinerario PDF</span>
+                </a>
+            </div>
+
+        </div> 
+    </div>
+
+    <script>
+        // ¡REEMPLAZA ESTA URL CON LA QUE GENERASTE EN EL PASO 1!
+        const API_URL = 'https://script.google.com/macros/s/AKfycbxrLT5HCUdyrG2ymEwu1x1mE8O0jxWHuA1bpnHEo4HNUxmVsoTtCTcsjFrNOmCOli67Fg/exec';    
+        
+        let semanasData = [];
+
+        // Mapeo para calcular meses numéricos
+        const mesesMap = {
+            "ENERO": 0, "FEBRERO": 1, "MARZO": 2, "ABRIL": 3, "MAYO": 4, "JUNIO": 5, 
+            "JULIO": 6, "AGOSTO": 7, "SEPTIEMBRE": 8, "OCTUBRE": 9, "NOVIEMBRE": 10, "DICIEMBRE": 11
+        };
+
+        function toggleDropdown() {
+            document.getElementById("shareDropdown").classList.toggle("show");
+        }
+
+        window.onclick = function(event) {
+            if (!event.target.closest('.dropdown')) {
+                let dropdowns = document.getElementsByClassName("dropdown-content");
+                for (let i = 0; i < dropdowns.length; i++) {
+                    let openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+
+        async function cargarDatos() {
+            try {
+                const respuesta = await fetch(API_URL);
+                semanasData = await respuesta.json();
+                
+                if (semanasData.length > 0) {
+                    llenarSelector();
+                    document.getElementById('main-content').style.display = 'block';
+                    seleccionarSemanaActual();
+                } else {
+                    alert("No se encontraron itinerarios.");
+                }
+            } catch(error) {
+                console.error(error);
+                alert("Falta pegar tu URL de Google Apps Script en el código HTML.");
+            }
+        }
+
+        function llenarSelector() {
+            const selector = document.getElementById('week-selector');
+            selector.innerHTML = '<option value="">Seleccione una semana...</option>';
+
+            let currentOptGroup = null;
+            let currentMonth = "";
+
+            semanasData.forEach((semana, index) => {
+                const eventoRef = semana.sabado || semana.miercoles;
+                if(!eventoRef) return;
+
+                if (eventoRef.mes !== currentMonth) {
+                    currentMonth = eventoRef.mes;
+                    currentOptGroup = document.createElement('optgroup');
+                    currentOptGroup.label = currentMonth;
+                    selector.appendChild(currentOptGroup);
+                }
+
+                const option = document.createElement('option');
+                option.value = index;
+                
+                let texto = "";
+                if(semana.miercoles && semana.sabado) {
+                    texto = `${semana.miercoles.diaNumero} ${semana.miercoles.mes.substring(0,3)} - ${semana.sabado.diaNumero} ${semana.sabado.mes.substring(0,3)}`;
+                } else if (semana.miercoles) {
+                    texto = `Miércoles ${semana.miercoles.diaNumero} ${semana.miercoles.mes.substring(0,3)}`;
+                } else if (semana.sabado) {
+                    texto = `Sábado ${semana.sabado.diaNumero} ${semana.sabado.mes.substring(0,3)}`;
+                }
+
+                option.textContent = texto;
+                currentOptGroup.appendChild(option);
+            });
+
+            selector.addEventListener('change', function(e){
+                if(e.target.value !== "") {
+                    mostrarSemana(e.target.value);
+                }
+            });
+        }
+
+        function mostrarSemana(index) {
+            const semana = semanasData[index];
+            if(!semana) return;
+
+            // Extraemos el director del sábado para el Banner Principal
+            document.getElementById('anciano-turno').textContent = semana.sabado ? (semana.sabado.director || '--') : '--';
+
+            // Tarjeta Miércoles
+            const divMiercoles = document.getElementById('row-miercoles');
+            if(semana.miercoles) {
+                divMiercoles.style.display = 'flex';
+                document.getElementById('num-miercoles').textContent = semana.miercoles.diaNumero;
+                document.getElementById('mes-miercoles').textContent = semana.miercoles.mes.substring(0,3);
+                document.getElementById('pred-miercoles').textContent = semana.miercoles.predicador || '--';
+            } else {
+                divMiercoles.style.display = 'none';
+            }
+
+            // Tarjeta Sábado
+            const divSabado = document.getElementById('row-sabado');
+            if(semana.sabado) {
+                divSabado.style.display = 'flex';
+                document.getElementById('num-sabado').textContent = semana.sabado.diaNumero;
+                document.getElementById('mes-sabado').textContent = semana.sabado.mes.substring(0,3);
+                document.getElementById('pred-sabado').textContent = semana.sabado.predicador || '--';
+                document.getElementById('prog-es').textContent = semana.sabado.programa_es || '--';
+                document.getElementById('maestro-es').textContent = semana.sabado.maestro_es || '--';
+                document.getElementById('maestra-ninos').textContent = semana.sabado.maestra_ninos || '--';
+                document.getElementById('preludio').textContent = semana.sabado.preludio || '--';
+                document.getElementById('sociedad-jovenes').textContent = semana.sabado.sociedad_jovenes || '--';
+            } else {
+                divSabado.style.display = 'none';
+            }
+        }
+
+        function seleccionarSemanaActual() {
+            const hoy = new Date();
+            const currentYear = 2026; 
+            let indexSeleccionado = 0;
+            
+            for(let i = 0; i < semanasData.length; i++) {
+                let evento = semanasData[i].sabado || semanasData[i].miercoles;
+                if(evento) {
+                    let mesIdx = mesesMap[evento.mes];
+                    let dia = parseInt(evento.diaNumero);
+                    let fechaEvento = new Date(currentYear, mesIdx, dia, 23, 59, 59);
+                    
+                    if(hoy <= fechaEvento) {
+                        indexSeleccionado = i;
+                        break; 
+                    }
+                }
+            }
+            
+            document.getElementById('week-selector').value = indexSeleccionado;
+            mostrarSemana(indexSeleccionado);
+        }
+
+        async function compartirComoImagen() {
+            toggleDropdown();
+            const areaCaptura = document.getElementById('capture-area');
+            const boton = document.getElementById('btn-share-main');
+            const textoBoton = document.getElementById('share-text-main');
+            
+            const selector = document.getElementById('week-selector');
+            const rangoSemanas = selector.options[selector.selectedIndex].text || 'itinerario';
+
+            boton.disabled = true;
+            textoBoton.textContent = 'Generando...';
+
+            try {
+                const canvas = await html2canvas(areaCaptura, {
+                    scale: 2, 
+                    backgroundColor: '#f0f4f8',
+                    logging: false,
+                    useCORS: true
+                });
+
+                const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png', 0.95));
+                const nombreArchivo = `Itinerario_${rangoSemanas.replace(/ /g, '_')}.png`;
+                const fotoParaCompartir = new File([blob], nombreArchivo, { type: blob.type });
+
+                if (navigator.canShare && navigator.canShare({ files: [fotoParaCompartir] })) {
+                    await navigator.share({
+                        files: [fotoParaCompartir],
+                        title: `Itinerario IASD Zona 2`,
+                        text: `Itinerario IASD Zona 2`
+                    });
+                } else {
+                    const imageUrl = canvas.toDataURL("image/png");
+                    const nuevaVentana = window.open();
+                    if(!nuevaVentana) {
+                        alert("Por favor, permite las ventanas emergentes.");
+                        return;
+                    }
+                    nuevaVentana.document.write(`
+                        <html>
+                            <head><title>Copiar Itinerario</title></head>
+                            <body style="margin:0; display:flex; flex-direction:column; align-items:center; background:#333; color:white; font-family:sans-serif; justify-content:center; height:100vh;">
+                                <img src="${imageUrl}" alt="Itinerario" style="max-width:90%; max-height:80vh; border-radius:10px;">
+                                <p style="background:rgba(0,0,0,0.8); padding:15px; border-radius:10px;">Haz Clic Derecho -> <strong>"Copiar imagen"</strong> y pégala en WhatsApp.</p>
+                            </body>
+                        </html>
+                    `);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Hubo un error al generar la imagen.');
+            } finally {
+                boton.disabled = false;
+                textoBoton.textContent = 'Compartir';
+            }
+        }
+
+        async function compartirComoTexto() {
+            toggleDropdown();
+            const index = document.getElementById('week-selector').value;
+            if(index === "") {
+                alert("Por favor selecciona una semana primero.");
+                return;
+            }
+            
+            const semana = semanasData[index];
+            
+            // Viñetas Cristianas: ⛪ Iglesia para el título, 📖 Biblia para los días, 🔹 Rombo para la lista
+            let texto = `⛪ *IGLESIA ADVENTISTA DEL SÉPTIMO DÍA - ZONA 2*\n`;
+            texto += `*ITINERARIO DE ACTIVIDADES*\n`;
+            texto += `----------------------------------\n\n`;
+
+            if(semana.miercoles) {
+                texto += `📖 *MIÉRCOLES ${semana.miercoles.diaNumero} DE ${semana.miercoles.mes}*\n`;
+                if(semana.miercoles.predicador) texto += `🔹 Predicador: ${semana.miercoles.predicador}\n`;
+                texto += `\n`;
+            }
+
+            if(semana.sabado) {
+                texto += `📖 *SÁBADO ${semana.sabado.diaNumero} DE ${semana.sabado.mes}*\n`;
+                if(semana.sabado.director) texto += `🔹 Director(a): ${semana.sabado.director}\n`;
+                if(semana.sabado.predicador) texto += `🔹 Culto Divino: ${semana.sabado.predicador}\n`;
+                if(semana.sabado.programa_es) texto += `🔹 Prog. Esc. Sabática: ${semana.sabado.programa_es}\n`;
+                if(semana.sabado.maestro_es) texto += `🔹 Maestro Esc. Sab.: ${semana.sabado.maestro_es}\n`;
+                if(semana.sabado.maestra_ninos) texto += `🔹 Maestra de Niños: ${semana.sabado.maestra_ninos}\n`;
+                if(semana.sabado.preludio) texto += `🔹 Preludio: ${semana.sabado.preludio}\n`;
+                if(semana.sabado.sociedad_jovenes) texto += `🔹 Soc. Jóvenes: ${semana.sabado.sociedad_jovenes}\n`;
+            }
+
+            if (navigator.share) {
+                try {
+                    await navigator.share({
+                        title: 'Itinerario IASD Zona 2',
+                        text: texto
+                    });
+                    return;
+                } catch(e) {}
+            } 
+            
+            try {
+                await navigator.clipboard.writeText(texto);
+                alert("✅ ¡Texto copiado al portapapeles!\n\nYa puedes ir a WhatsApp, hacer clic derecho (o mantener presionado) y seleccionar 'Pegar'.");
+            } catch(err) {
+                alert("No se pudo copiar. Por favor revisa los permisos.");
+            }
+        }
+
+        cargarDatos();
+    </script>
+</body>
+</html>
