@@ -483,12 +483,12 @@
             });
         }
 
-        function mostrarSemana(index) {
+function mostrarSemana(index) {
             const semana = semanasData[index];
             if(!semana) return;
 
-            // Extraemos el director del sábado para el Banner Principal
-            document.getElementById('anciano-turno').textContent = semana.sabado ? (semana.sabado.director || '--') : '--';
+            // CORRECCIÓN: Usamos el ID correcto 'director-sabado' en lugar de 'anciano-turno'
+            document.getElementById('director-sabado').textContent = semana.sabado ? (semana.sabado.director || '--') : '--';
 
             // Tarjeta Miércoles
             const divMiercoles = document.getElementById('row-miercoles');
