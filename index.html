@@ -6,47 +6,37 @@
     <title>Itinerario IASD Zona 2</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
-        /* --- ESTILOS IASD --- */
+        /* --- PALETA DE COLORES GOTHIC NOIR --- */
         :root {
-            --bg-page: #f0f4f8; 
-            --navy-dark: #1b2a41; 
-            --navy-medium: #2b3d5b; 
-            --navy-light: #344a6e;
+            --gn-black: #000000;
+            --gn-light-grey: #D1D0D0;
+            --gn-mauve: #988686;
+            --gn-dark-brown: #5C4E4E;
             --text-white: #ffffff;
-            --text-label: #a9b7cf; 
-            --iasd-teal: #3b8a8b;
-            --iasd-gold: #cfa86a;
+            --text-light-grey: #e0e0e0; 
         }
 
         body {
             font-family: 'Noto Sans', 'Open Sans', Arial, sans-serif;
-            background-color: var(--bg-page);
-            color: var(--navy-dark);
+            background-color: var(--gn-light-grey);
+            color: var(--gn-black);
             margin: 0;
             padding: 0;
         }
 
         header {
-            background-color: var(--navy-dark);
+            background-color: #ffffff; /* Fondo blanco para que el logo resalte bien */
             text-align: center;
-            padding: 30px 20px;
-            color: var(--text-white);
+            padding: 30px 20px 20px 20px;
+            border-bottom: 3px solid var(--gn-black);
         }
 
         header img {
-            max-width: 90px;
-            background: white;
-            padding: 8px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 1.5rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            line-height: 1.4;
+            max-width: 250px; /* Tamaño ajustado para que sea el protagonista */
+            width: 100%;
+            height: auto;
+            margin: 0 auto;
+            display: block;
         }
 
         .container {
@@ -65,41 +55,41 @@
             padding: 12px 15px;
             font-size: 1.1rem;
             border-radius: 8px;
-            border: 2px solid #ddd;
+            border: 2px solid var(--gn-dark-brown);
             background-color: #fff;
-            color: var(--navy-dark);
+            color: var(--gn-black);
             width: 100%;
             max-width: 350px;
             cursor: pointer;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
         
         select optgroup {
             font-weight: bold;
-            color: var(--navy-dark);
-            background-color: #eee;
+            color: var(--gn-black);
+            background-color: var(--gn-light-grey);
         }
 
         .capture-area {
-            background-color: var(--bg-page);
+            background-color: var(--gn-light-grey);
             padding: 20px 10px;
             border-radius: 8px;
         }
 
         .anciano-banner {
-            background-color: var(--navy-light);
-            color: var(--text-white);
-            padding: 12px 20px;
+            background-color: var(--gn-mauve);
+            color: var(--gn-black);
+            padding: 15px 20px;
             border-radius: 8px;
             text-align: center;
             font-size: 1.2rem;
             margin-bottom: 30px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            border-bottom: 3px solid var(--iasd-gold);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+            border-bottom: 3px solid var(--gn-dark-brown);
         }
 
         .anciano-banner span:first-child {
-            color: var(--text-label);
+            color: var(--gn-black);
             font-weight: normal;
             font-size: 1rem;
             text-transform: uppercase;
@@ -119,7 +109,7 @@
         }
 
         .day-circle {
-            background-color: var(--navy-dark);
+            background-color: var(--gn-black);
             color: var(--text-white);
             width: 110px;
             height: 110px;
@@ -132,6 +122,7 @@
             z-index: 10; 
             box-shadow: 4px 0px 10px rgba(0,0,0,0.3);
             flex-shrink: 0;
+            border: 2px solid var(--gn-light-grey); /* Pequeño borde para separar visualmente */
         }
 
         .day-circle .day-name {
@@ -140,6 +131,7 @@
             letter-spacing: 1px;
             text-transform: uppercase;
             margin-bottom: 2px;
+            color: var(--gn-light-grey);
         }
 
         .day-circle .day-number {
@@ -152,10 +144,11 @@
             font-size: 0.8rem;
             letter-spacing: 1px;
             text-transform: uppercase;
+            color: var(--gn-light-grey);
         }
 
         .day-content {
-            background-color: var(--navy-medium);
+            background-color: var(--gn-dark-brown);
             color: var(--text-white);
             margin-left: -55px;
             padding: 25px 20px 25px 70px;
@@ -166,7 +159,7 @@
             min-height: 90px;
             display: flex;
             align-items: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
         }
 
         .detail-grid {
@@ -177,7 +170,7 @@
         }
 
         .detail-label {
-            color: var(--text-label);
+            color: var(--text-light-grey);
             font-weight: bold;
             text-align: right;
             font-size: 1rem;
@@ -186,6 +179,20 @@
         .detail-value {
             font-weight: normal;
             font-size: 1.05rem;
+        }
+
+        /* --- Footer Logo --- */
+        .footer-logo {
+            text-align: right;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px dashed var(--gn-mauve);
+        }
+
+        .footer-logo img {
+            max-width: 150px;
+            height: auto;
+            opacity: 0.9;
         }
 
         /* --- BOTONES MINIMALISTAS --- */
@@ -198,7 +205,7 @@
         }
 
         .btn-action {
-            color: white;
+            color: var(--text-white);
             border: none;
             padding: 12px 24px;
             font-size: 1.1rem;
@@ -214,19 +221,25 @@
         }
 
         .btn-share-main {
-            background-color: var(--iasd-teal);
-            box-shadow: 0 4px 15px rgba(59, 138, 139, 0.4);
+            background-color: var(--gn-black);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
         }
-        .btn-share-main:hover { background-color: #2e6c6d; transform: translateY(-2px); }
+        .btn-share-main:hover { 
+            background-color: var(--gn-dark-brown); 
+            transform: translateY(-2px); 
+        }
 
         .btn-pdf {
-            background-color: var(--navy-dark);
-            box-shadow: 0 4px 15px rgba(27, 42, 65, 0.4);
+            background-color: var(--gn-dark-brown);
+            box-shadow: 0 4px 15px rgba(92, 78, 78, 0.4);
         }
-        .btn-pdf:hover { background-color: #0d1624; transform: translateY(-2px); }
+        .btn-pdf:hover { 
+            background-color: var(--gn-black); 
+            transform: translateY(-2px); 
+        }
 
         .btn-action:disabled {
-            background-color: #aab;
+            background-color: var(--gn-mauve);
             cursor: not-allowed;
             transform: none;
             box-shadow: none;
@@ -250,14 +263,14 @@
             border-radius: 12px;
             z-index: 100;
             overflow: hidden;
-            border: 1px solid #eaeaea;
+            border: 1px solid var(--gn-light-grey);
         }
 
         .dropdown-content.show { display: flex; flex-direction: column; }
 
         .dropdown-item {
             padding: 15px 20px;
-            color: var(--navy-dark);
+            color: var(--gn-black);
             font-size: 1rem;
             font-weight: bold;
             text-decoration: none;
@@ -270,16 +283,17 @@
         }
 
         .dropdown-item:last-child { border-bottom: none; }
-        .dropdown-item:hover { background-color: var(--bg-page); }
-        .dropdown-item svg { color: var(--iasd-teal); }
+        .dropdown-item:hover { background-color: var(--gn-light-grey); }
+        .dropdown-item svg { color: var(--gn-dark-brown); }
 
         @media (max-width: 500px) {
+            header img { max-width: 200px; }
             .day-circle { width: 90px; height: 90px; }
             .day-circle .day-number { font-size: 2rem; }
             .day-circle .day-name { font-size: 0.9rem; }
             .day-content { margin-left: -45px; padding-left: 55px; }
             .detail-grid { grid-template-columns: 1fr; gap: 2px; }
-            .detail-label { text-align: left; font-size: 0.85rem; margin-top: 5px;}
+            .detail-label { text-align: left; font-size: 0.85rem; margin-top: 5px; color: var(--gn-mauve);}
             .detail-value { font-size: 1rem; margin-bottom: 5px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 5px;}
             .detail-value:last-child { border-bottom: none; }
         }
@@ -288,8 +302,8 @@
 <body>
 
     <header>
-        <img src="logo_iasd.png" alt="Logo IASD">
-        <h1>IGLESIA ADVENTISTA DEL SÉPTIMO DÍA<br>ZONA 2</h1>
+        <!-- Logo IASD Zona 2 sin texto -->
+        <img src="logo-iasdz2.png" alt="Logo IASD Zona 2">
     </header>
 
     <div class="container">
@@ -353,6 +367,11 @@
                         </div>
                     </div>
                 </div>
+                
+                <!-- Logo Final en el área de captura -->
+                <div class="footer-logo">
+                    <img src="ESP-logo1-1v27.png" alt="UnaVoz27">
+                </div>
 
             </div> <!-- Fin capture-area -->
 
@@ -377,7 +396,6 @@
                     </div>
                 </div>
                 
-                <!-- BOTÓN PDF APUNTANDO A LA NUEVA HOJA (ZONA 2) -->
                 <a class="btn-action btn-pdf" href="https://docs.google.com/spreadsheets/d/1AyClkcgYEPakLdg_j04QPg_S7cJkgW_eOEeYexUYQu8/export?format=pdf" target="_blank" rel="noopener noreferrer">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><polyline points="9 15 12 18 15 15"></polyline></svg>
                     <span>Itinerario PDF</span>
@@ -388,12 +406,11 @@
     </div>
 
     <script>
-        // ¡REEMPLAZA ESTA URL CON LA QUE GENERASTE EN EL PASO 1!
-        const API_URL = 'https://script.google.com/macros/s/AKfycbxrLT5HCUdyrG2ymEwu1x1mE8O0jxWHuA1bpnHEo4HNUxmVsoTtCTcsjFrNOmCOli67Fg/exec';    
+        // ¡REEMPLAZA ESTA URL CON TU ENLACE!
+        const API_URL = 'https://script.google.com/macros/s/AKfycbycE77oVz2Y6R9z5t00Bquk4b01m1bZ1Xz2h7c8l0N3Wv2y4Xq5u6i7p8O9n0a1b2c3d4e5f/exec';    
         
         let semanasData = [];
 
-        // Mapeo para calcular meses numéricos
         const mesesMap = {
             "ENERO": 0, "FEBRERO": 1, "MARZO": 2, "ABRIL": 3, "MAYO": 4, "JUNIO": 5, 
             "JULIO": 6, "AGOSTO": 7, "SEPTIEMBRE": 8, "OCTUBRE": 9, "NOVIEMBRE": 10, "DICIEMBRE": 11
@@ -442,6 +459,7 @@
                 alert("Error de conexión: " + error.message);
             }
         }
+
         function llenarSelector() {
             const selector = document.getElementById('week-selector');
             selector.innerHTML = '<option value="">Seleccione una semana...</option>';
@@ -483,14 +501,12 @@
             });
         }
 
-function mostrarSemana(index) {
+        function mostrarSemana(index) {
             const semana = semanasData[index];
             if(!semana) return;
 
-            // CORRECCIÓN: Usamos el ID correcto 'director-sabado' en lugar de 'anciano-turno'
             document.getElementById('director-sabado').textContent = semana.sabado ? (semana.sabado.director || '--') : '--';
 
-            // Tarjeta Miércoles
             const divMiercoles = document.getElementById('row-miercoles');
             if(semana.miercoles) {
                 divMiercoles.style.display = 'flex';
@@ -501,7 +517,6 @@ function mostrarSemana(index) {
                 divMiercoles.style.display = 'none';
             }
 
-            // Tarjeta Sábado
             const divSabado = document.getElementById('row-sabado');
             if(semana.sabado) {
                 divSabado.style.display = 'flex';
@@ -554,9 +569,10 @@ function mostrarSemana(index) {
             textoBoton.textContent = 'Generando...';
 
             try {
+                // Color de fondo acorde a la paleta Gothic Noir
                 const canvas = await html2canvas(areaCaptura, {
                     scale: 2, 
-                    backgroundColor: '#f0f4f8',
+                    backgroundColor: '#D1D0D0', 
                     logging: false,
                     useCORS: true
                 });
@@ -581,9 +597,9 @@ function mostrarSemana(index) {
                     nuevaVentana.document.write(`
                         <html>
                             <head><title>Copiar Itinerario</title></head>
-                            <body style="margin:0; display:flex; flex-direction:column; align-items:center; background:#333; color:white; font-family:sans-serif; justify-content:center; height:100vh;">
+                            <body style="margin:0; display:flex; flex-direction:column; align-items:center; background:#000000; color:white; font-family:sans-serif; justify-content:center; height:100vh;">
                                 <img src="${imageUrl}" alt="Itinerario" style="max-width:90%; max-height:80vh; border-radius:10px;">
-                                <p style="background:rgba(0,0,0,0.8); padding:15px; border-radius:10px;">Haz Clic Derecho -> <strong>"Copiar imagen"</strong> y pégala en WhatsApp.</p>
+                                <p style="background:rgba(92, 78, 78, 0.8); padding:15px; border-radius:10px;">Haz Clic Derecho -> <strong>"Copiar imagen"</strong> y pégala en WhatsApp.</p>
                             </body>
                         </html>
                     `);
@@ -607,7 +623,6 @@ function mostrarSemana(index) {
             
             const semana = semanasData[index];
             
-            // Viñetas Cristianas: ⛪ Iglesia para el título, 📖 Biblia para los días, 🔹 Rombo para la lista
             let texto = `⛪ *IGLESIA ADVENTISTA DEL SÉPTIMO DÍA - ZONA 2*\n`;
             texto += `*ITINERARIO DE ACTIVIDADES*\n`;
             texto += `----------------------------------\n\n`;
