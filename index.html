@@ -418,21 +418,30 @@
         async function cargarDatos() {
             try {
                 const respuesta = await fetch(API_URL);
-                semanasData = await respuesta.json();
+                if (!respuesta.ok) {
+                    throw new Error(`Google bloqueó el acceso (Error HTTP ${respuesta.status})`);
+                }
+                
+                const texto = await respuesta.text();
+                
+                try {
+                    semanasData = JSON.parse(texto);
+                } catch (e) {
+                    throw new Error("Google devolvió una página web en lugar de datos. Revisa que el acceso sea a 'Cualquier persona' en Apps Script.");
+                }
                 
                 if (semanasData.length > 0) {
                     llenarSelector();
                     document.getElementById('main-content').style.display = 'block';
                     seleccionarSemanaActual();
                 } else {
-                    alert("No se encontraron itinerarios.");
+                    alert("No se encontraron itinerarios en la hoja.");
                 }
             } catch(error) {
-                console.error(error);
-                alert("Falta pegar tu URL de Google Apps Script en el código HTML.");
+                console.error("Error real:", error);
+                alert("Error de conexión: " + error.message);
             }
         }
-
         function llenarSelector() {
             const selector = document.getElementById('week-selector');
             selector.innerHTML = '<option value="">Seleccione una semana...</option>';
