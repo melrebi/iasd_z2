@@ -5,205 +5,233 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Estudio - Apps</title>
     <style>
-        /* Variables y reseteo básico */
+        /* Reseteo y variables para un diseño limpio y blanco */
         :root {
-            --primary-color: #0056b3;
-            --bg-color: #f4f6f8;
-            --card-bg: #ffffff;
-            --text-main: #333333;
+            --bg-color: #ffffff; /* Fondo completamente blanco */
+            --text-main: #222222;
             --text-muted: #666666;
+            --border-color: #eaeaea;
+            --hover-bg: #f9f9f9;
         }
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent; /* Quita el resalte azul en móviles */
         }
 
         body {
             background-color: var(--bg-color);
             color: var(--text-main);
-            /* Centrar en pantallas grandes */
-            max-width: 600px;
+            max-width: 800px; /* Un poco más ancho para la cuadrícula en PC */
             margin: 0 auto;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            box-shadow: 0 0 15px rgba(0,0,0,0.05);
         }
 
-        /* Barra de navegación superior */
+        /* Navegación limpia */
         .navbar {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 15px 20px;
+            padding: 20px;
             display: flex;
             align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            background-color: rgba(255, 255, 255, 0.95);
             position: sticky;
             top: 0;
             z-index: 10;
         }
+
         .back-btn {
-            color: white;
+            color: var(--text-main);
             text-decoration: none;
-            font-size: 24px;
+            font-size: 28px;
             margin-right: 15px;
             line-height: 1;
-        }
-        .navbar h1 {
-            font-size: 1.2rem;
-            font-weight: 600;
-        }
-
-        /* Contenido principal */
-        .content {
-            padding: 20px;
-            flex-grow: 1;
-        }
-        .section-title {
-            font-size: 1.1rem;
-            margin: 20px 0 15px;
-            color: var(--text-muted);
-            border-bottom: 2px solid #ddd;
-            padding-bottom: 5px;
-        }
-
-        /* Tarjeta de Aplicación */
-        .app-card {
-            background: var(--card-bg);
-            border-radius: 12px;
-            padding: 15px;
-            margin-bottom: 15px;
             display: flex;
             align-items: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.08);
-            transition: transform 0.2s;
-        }
-        .app-card:active {
-            transform: scale(0.98);
-        }
-        
-        .app-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 12px;
-            object-fit: cover;
-            margin-right: 15px;
-            background-color: #eee; /* Por si la imagen tarda en cargar */
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            transition: background-color 0.2s;
         }
 
-        .app-info {
-            flex-grow: 1;
+        .back-btn:hover, .back-btn:active {
+            background-color: var(--hover-bg);
         }
-        .app-title {
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 4px;
+
+        .navbar h1 {
+            font-size: 1.2rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
         }
-        .app-developer {
-            font-size: 0.8rem;
+
+        /* Contenedor Principal */
+        .content {
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .instructions {
             color: var(--text-muted);
-            margin-bottom: 8px;
+            margin-bottom: 40px;
+            font-size: 0.95rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        /* Botón de descarga */
-        .download-btn {
-            display: inline-block;
-            background-color: #e8f0fe;
-            color: var(--primary-color);
-            padding: 6px 16px;
-            border-radius: 20px;
+        /* Cuadrícula de Aplicaciones (Estilo minimalista) */
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 30px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Estilo de cada App (Botón) */
+        .app-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            padding: 15px 10px;
+            border-radius: 12px;
+            transition: transform 0.2s, background-color 0.2s;
             text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: 600;
+            color: inherit;
         }
-        .ios-btn {
-            background-color: #f2f2f7;
-            color: #007aff;
+
+        .app-item:hover {
+            background-color: var(--hover-bg);
         }
+
+        .app-item:active {
+            transform: scale(0.95);
+        }
+
+        .app-icon {
+            width: 65px;
+            height: 65px;
+            object-fit: contain;
+            margin-bottom: 15px;
+            /* Si las imágenes adjuntas son PNG transparentes, no necesitan fondo */
+        }
+
+        .app-title {
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-align: center;
+            line-height: 1.2;
+        }
+
     </style>
 </head>
 <body>
 
-    <!-- Barra de Navegación -->
+    <!-- Navegación -->
     <nav class="navbar">
-        <a href="index.html" class="back-btn" aria-label="Inicio">‹</a>
-        <h1>Aplicaciones de Estudio</h1>
+        <a href="index.html" class="back-btn" aria-label="Volver al inicio">‹</a>
+        <h1>ESTUDIO</h1>
     </nav>
 
     <!-- Contenido -->
     <main class="content">
+        <p class="instructions">Selecciona una aplicación. Se abrirá directamente si la tienes instalada, o te llevará a la tienda para descargarla.</p>
 
-        <!-- SECCIÓN ANDROID -->
-        <h2 class="section-title">Para Android (Google Play)</h2>
+        <!-- Cuadrícula de Apps -->
+        <div class="app-grid">
 
-        <!-- App 1: EGW Writings -->
-        <div class="app-card">
-            <!-- Usando el logo de la Play Store para EGW -->
-            <img src="https://play-lh.googleusercontent.com/yv-H_qI-h579iH7aYQ2V8R9Nl8h5Vl6v_85m_m2v_3_4l_4_432323_3_4=w240-h480-rw" alt="EGW Writings Icon" class="app-icon">
-            <div class="app-info">
-                <div class="app-title">EGW Writings</div>
-                <div class="app-developer">Ellen G. White Estate</div>
-                <a href="https://play.google.com/store/apps/details?id=com.whiteestate.egwwritings" class="download-btn" target="_blank">Instalar</a>
+            <!-- EGW Writings -->
+            <!-- Aquí debes reemplazar 'imagen1.png' por el nombre real o la ruta de la primera imagen adjunta -->
+            <div class="app-item" onclick="openApp('egw://', 'com.whiteestate.egwwritings', 'id-ios-placeholder')">
+                <img src="imagen1.png" alt="EGW Writings" class="app-icon">
+                <span class="app-title">EGW Writings</span>
             </div>
-        </div>
 
-        <!-- App 2: Reavivados por su Palabra -->
-        <div class="app-card">
-            <!-- Usando el logo de la Play Store para RPSP -->
-            <img src="https://play-lh.googleusercontent.com/832_640498_4_4_3_4_43_3_4_3_4=w240-h480-rw" alt="RPSP Icon" class="app-icon" onerror="this.src='https://via.placeholder.com/60?text=RPSP'">
-            <div class="app-info">
-                <div class="app-title">Reavivados por su Palabra</div>
-                <div class="app-developer">Edgar J.P.</div>
-                <a href="https://play.google.com/store/apps/details?id=com.edgarjp.rpsp" class="download-btn" target="_blank">Instalar</a>
+            <!-- Reavivados por su Palabra (RPSP) -->
+             <!-- Aquí debes reemplazar 'imagen2.png' por el nombre real o la ruta de la segunda imagen adjunta -->
+            <div class="app-item" onclick="openApp('rpsp://', 'com.edgarjp.rpsp', 'id-ios-placeholder')">
+                <img src="imagen2.png" alt="Reavivados por su Palabra" class="app-icon">
+                <span class="app-title">Reavivados</span>
             </div>
-        </div>
 
-        <!-- App 3: Escuela Sabática -->
-        <div class="app-card">
-            <!-- Usando el logo de la Play Store para Sabbath School -->
-            <img src="https://play-lh.googleusercontent.com/129737_3_4_3_4_4_3_4_3_4=w240-h480-rw" alt="Escuela Sabática Icon" class="app-icon" onerror="this.src='https://via.placeholder.com/60?text=ES'">
-            <div class="app-info">
-                <div class="app-title">Escuela Sabática</div>
-                <div class="app-developer">Adventech</div>
-                <a href="https://play.google.com/store/apps/details?id=com.cryart.sabbathschool" class="download-btn" target="_blank">Instalar</a>
+            <!-- Escuela Sabática -->
+             <!-- Aquí debes reemplazar 'imagen3.png' por el nombre real o la ruta de la tercera imagen adjunta -->
+            <div class="app-item" onclick="openApp('sabbathschool://', 'com.cryart.sabbathschool', 'id-ios-placeholder')">
+                <img src="imagen3.png" alt="Escuela Sabática" class="app-icon">
+                <span class="app-title">Escuela Sabática</span>
             </div>
+
         </div>
-
-
-        <!-- SECCIÓN IOS -->
-        <h2 class="section-title">Para iOS (App Store)</h2>
-
-        <!-- Placeholder App 1 -->
-        <div class="app-card">
-            <img src="https://via.placeholder.com/60/eeeeee/999999?text=EGW" alt="iOS Icon" class="app-icon">
-            <div class="app-info">
-                <div class="app-title">EGW Writings</div>
-                <div class="app-developer">Ellen G. White Estate</div>
-                <a href="#" class="download-btn ios-btn">Próximamente</a>
-            </div>
-        </div>
-
-        <!-- Placeholder App 2 -->
-        <div class="app-card">
-            <img src="https://via.placeholder.com/60/eeeeee/999999?text=RPSP" alt="iOS Icon" class="app-icon">
-            <div class="app-info">
-                <div class="app-title">Reavivados por su Palabra</div>
-                <div class="app-developer">Edgar J.P.</div>
-                <a href="#" class="download-btn ios-btn">Próximamente</a>
-            </div>
-        </div>
-
-        <!-- Placeholder App 3 -->
-        <div class="app-card">
-            <img src="https://via.placeholder.com/60/eeeeee/999999?text=ES" alt="iOS Icon" class="app-icon">
-            <div class="app-info">
-                <div class="app-title">Escuela Sabática</div>
-                <div class="app-developer">Adventech</div>
-                <a href="#" class="download-btn ios-btn">Próximamente</a>
-            </div>
-        </div>
-
     </main>
+
+    <!-- Script de Deep Linking -->
+    <script>
+        /**
+         * Función para manejar el Deep Linking (Abrir app o ir a la tienda)
+         * @param {string} appScheme - El esquema URL de la app (ej: 'egw://')
+         * @param {string} androidPackage - El ID del paquete en Google Play
+         * @param {string} iosAppId - El ID de la app en la App Store (placeholder)
+         */
+        function openApp(appScheme, androidPackage, iosAppId) {
+            
+            // 1. Detectar el sistema operativo
+            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+            let isAndroid = /android/i.test(userAgent);
+            let isIOS = /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream;
+
+            // Definir las URLs de las tiendas
+            const playStoreUrl = 'https://play.google.com/store/apps/details?id=' + androidPackage;
+            const appStoreUrl = 'https://apps.apple.com/app/id' + iosAppId; // Placeholder
+
+            // Si es un navegador de escritorio, enviar a Google Play por defecto
+            if (!isAndroid && !isIOS) {
+                window.open(playStoreUrl, '_blank');
+                return;
+            }
+
+            // 2. Intentar abrir el esquema de la App (Deep Link)
+            // Nota: Para que esto funcione perfecto, las apps deben tener configurado su URI Scheme.
+            // He puesto 'egw://', 'rpsp://', 'sabbathschool://' como ejemplos estándar.
+            let appUrl = appScheme; 
+
+            // Registrar el tiempo actual
+            const start = Date.now();
+            let timer;
+
+            // Función de fallback a la tienda
+            const fallbackToStore = () => {
+                const end = Date.now();
+                // Si pasaron menos de 2000ms, asumimos que la app no se abrió y lanzamos la tienda
+                if (end - start < 2000) {
+                    if (isAndroid) {
+                        window.location.href = playStoreUrl;
+                    } else if (isIOS) {
+                        // Descomentar esto cuando tengas los IDs de iOS reales
+                        // window.location.href = appStoreUrl; 
+                        alert("Enlace a iOS próximamente.");
+                    }
+                }
+            };
+
+            // Intentar abrir la app
+            window.location.href = appUrl;
+
+            // Configurar el temporizador para el fallback (1.5 segundos)
+            timer = setTimeout(fallbackToStore, 1500);
+
+            // Manejar si la página se oculta (significa que la app se abrió con éxito)
+            window.addEventListener('visibilitychange', function() {
+                if (document.hidden) {
+                    clearTimeout(timer);
+                }
+            });
+        }
+    </script>
 </body>
 </html>
