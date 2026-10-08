@@ -3,110 +3,204 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Estudio - Apps (Tailwind)</title>
-    <!-- Carga de Tailwind CSS vía CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Estudio - Apps</title>
+    <style>
+        /* Variables y reseteo básico */
+        :root {
+            --primary-color: #0056b3;
+            --bg-color: #f4f6f8;
+            --card-bg: #ffffff;
+            --text-main: #333333;
+            --text-muted: #666666;
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            /* Centrar en pantallas grandes */
+            max-width: 600px;
+            margin: 0 auto;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 15px rgba(0,0,0,0.05);
+        }
+
+        /* Barra de navegación superior */
+        .navbar {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .back-btn {
+            color: white;
+            text-decoration: none;
+            font-size: 24px;
+            margin-right: 15px;
+            line-height: 1;
+        }
+        .navbar h1 {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        /* Contenido principal */
+        .content {
+            padding: 20px;
+            flex-grow: 1;
+        }
+        .section-title {
+            font-size: 1.1rem;
+            margin: 20px 0 15px;
+            color: var(--text-muted);
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 5px;
+        }
+
+        /* Tarjeta de Aplicación */
+        .app-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+            transition: transform 0.2s;
+        }
+        .app-card:active {
+            transform: scale(0.98);
+        }
+        
+        .app-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            object-fit: cover;
+            margin-right: 15px;
+            background-color: #eee; /* Por si la imagen tarda en cargar */
+        }
+
+        .app-info {
+            flex-grow: 1;
+        }
+        .app-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        .app-developer {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        /* Botón de descarga */
+        .download-btn {
+            display: inline-block;
+            background-color: #e8f0fe;
+            color: var(--primary-color);
+            padding: 6px 16px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        .ios-btn {
+            background-color: #f2f2f7;
+            color: #007aff;
+        }
+    </style>
 </head>
-<!-- 
-  Clases en el body:
-  bg-gray-100: Fondo gris claro.
-  text-gray-800: Texto oscuro.
-  max-w-md mx-auto: Lo centra y limita el ancho para que parezca móvil en PC.
-  min-h-screen flex flex-col: Ocupa toda la pantalla, estructura flexible.
-  shadow-lg: Sombra ligera en PC.
--->
-<body class="bg-gray-100 text-gray-800 max-w-md mx-auto min-h-screen flex flex-col shadow-lg bg-white sm:bg-gray-100">
+<body>
 
     <!-- Barra de Navegación -->
-    <nav class="bg-blue-600 text-white p-4 flex items-center sticky top-0 z-10 shadow-md">
-        <a href="index.html" class="text-3xl leading-none mr-4 hover:text-gray-200" aria-label="Inicio">
-            <!-- Icono SVG de flecha hacia atrás -->
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-            </svg>
-        </a>
-        <h1 class="text-lg font-semibold">Apps de Estudio</h1>
+    <nav class="navbar">
+        <a href="index.html" class="back-btn" aria-label="Inicio">‹</a>
+        <h1>Aplicaciones de Estudio</h1>
     </nav>
 
     <!-- Contenido -->
-    <main class="flex-grow p-4 sm:p-5 bg-white">
+    <main class="content">
 
         <!-- SECCIÓN ANDROID -->
-        <h2 class="text-gray-500 font-medium border-b-2 border-gray-200 pb-1 mb-4 mt-2">Para Android (Google Play)</h2>
+        <h2 class="section-title">Para Android (Google Play)</h2>
 
         <!-- App 1: EGW Writings -->
-        <div class="flex items-center bg-white rounded-xl p-3 mb-3 shadow-sm border border-gray-100 active:scale-95 transition-transform">
-            <img src="https://play-lh.googleusercontent.com/yv-H_qI-h579iH7aYQ2V8R9Nl8h5Vl6v_85m_m2v_3_4l_4_432323_3_4=w240-h480-rw" alt="EGW Icon" class="w-14 h-14 rounded-lg object-cover mr-4 bg-gray-200">
-            <div class="flex-grow">
-                <h3 class="font-semibold text-base leading-tight">EGW Writings</h3>
-                <p class="text-xs text-gray-500 mb-2">Ellen G. White Estate</p>
-                <a href="https://play.google.com/store/apps/details?id=com.whiteestate.egwwritings" target="_blank" class="inline-block bg-blue-100 text-blue-700 text-xs font-bold px-4 py-1.5 rounded-full">
-                    Instalar
-                </a>
+        <div class="app-card">
+            <!-- Usando el logo de la Play Store para EGW -->
+            <img src="https://play-lh.googleusercontent.com/yv-H_qI-h579iH7aYQ2V8R9Nl8h5Vl6v_85m_m2v_3_4l_4_432323_3_4=w240-h480-rw" alt="EGW Writings Icon" class="app-icon">
+            <div class="app-info">
+                <div class="app-title">EGW Writings</div>
+                <div class="app-developer">Ellen G. White Estate</div>
+                <a href="https://play.google.com/store/apps/details?id=com.whiteestate.egwwritings" class="download-btn" target="_blank">Instalar</a>
             </div>
         </div>
 
         <!-- App 2: Reavivados por su Palabra -->
-        <div class="flex items-center bg-white rounded-xl p-3 mb-3 shadow-sm border border-gray-100 active:scale-95 transition-transform">
-            <img src="https://play-lh.googleusercontent.com/832_640498_4_4_3_4_43_3_4_3_4=w240-h480-rw" alt="RPSP Icon" onerror="this.src='https://via.placeholder.com/56?text=RPSP'" class="w-14 h-14 rounded-lg object-cover mr-4 bg-gray-200">
-            <div class="flex-grow">
-                <h3 class="font-semibold text-base leading-tight">Reavivados por su Palabra</h3>
-                <p class="text-xs text-gray-500 mb-2">Edgar J.P.</p>
-                <a href="https://play.google.com/store/apps/details?id=com.edgarjp.rpsp" target="_blank" class="inline-block bg-blue-100 text-blue-700 text-xs font-bold px-4 py-1.5 rounded-full">
-                    Instalar
-                </a>
+        <div class="app-card">
+            <!-- Usando el logo de la Play Store para RPSP -->
+            <img src="https://play-lh.googleusercontent.com/832_640498_4_4_3_4_43_3_4_3_4=w240-h480-rw" alt="RPSP Icon" class="app-icon" onerror="this.src='https://via.placeholder.com/60?text=RPSP'">
+            <div class="app-info">
+                <div class="app-title">Reavivados por su Palabra</div>
+                <div class="app-developer">Edgar J.P.</div>
+                <a href="https://play.google.com/store/apps/details?id=com.edgarjp.rpsp" class="download-btn" target="_blank">Instalar</a>
             </div>
         </div>
 
         <!-- App 3: Escuela Sabática -->
-        <div class="flex items-center bg-white rounded-xl p-3 mb-3 shadow-sm border border-gray-100 active:scale-95 transition-transform">
-            <img src="https://play-lh.googleusercontent.com/129737_3_4_3_4_4_3_4_3_4=w240-h480-rw" alt="ES Icon" onerror="this.src='https://via.placeholder.com/56?text=ES'" class="w-14 h-14 rounded-lg object-cover mr-4 bg-gray-200">
-            <div class="flex-grow">
-                <h3 class="font-semibold text-base leading-tight">Escuela Sabática</h3>
-                <p class="text-xs text-gray-500 mb-2">Adventech</p>
-                <a href="https://play.google.com/store/apps/details?id=com.cryart.sabbathschool" target="_blank" class="inline-block bg-blue-100 text-blue-700 text-xs font-bold px-4 py-1.5 rounded-full">
-                    Instalar
-                </a>
+        <div class="app-card">
+            <!-- Usando el logo de la Play Store para Sabbath School -->
+            <img src="https://play-lh.googleusercontent.com/129737_3_4_3_4_4_3_4_3_4=w240-h480-rw" alt="Escuela Sabática Icon" class="app-icon" onerror="this.src='https://via.placeholder.com/60?text=ES'">
+            <div class="app-info">
+                <div class="app-title">Escuela Sabática</div>
+                <div class="app-developer">Adventech</div>
+                <a href="https://play.google.com/store/apps/details?id=com.cryart.sabbathschool" class="download-btn" target="_blank">Instalar</a>
             </div>
         </div>
 
 
         <!-- SECCIÓN IOS -->
-        <h2 class="text-gray-500 font-medium border-b-2 border-gray-200 pb-1 mb-4 mt-6">Para iOS (App Store)</h2>
+        <h2 class="section-title">Para iOS (App Store)</h2>
 
-        <!-- Placeholder iOS -->
-        <div class="flex items-center bg-white rounded-xl p-3 mb-3 shadow-sm border border-gray-100">
-            <div class="w-14 h-14 rounded-lg bg-gray-200 mr-4 flex items-center justify-center text-gray-400 text-xs font-bold">EGW</div>
-            <div class="flex-grow">
-                <h3 class="font-semibold text-base leading-tight">EGW Writings</h3>
-                <p class="text-xs text-gray-500 mb-2">Ellen G. White Estate</p>
-                <a href="#" class="inline-block bg-gray-100 text-gray-500 text-xs font-bold px-4 py-1.5 rounded-full pointer-events-none">
-                    Próximamente
-                </a>
+        <!-- Placeholder App 1 -->
+        <div class="app-card">
+            <img src="https://via.placeholder.com/60/eeeeee/999999?text=EGW" alt="iOS Icon" class="app-icon">
+            <div class="app-info">
+                <div class="app-title">EGW Writings</div>
+                <div class="app-developer">Ellen G. White Estate</div>
+                <a href="#" class="download-btn ios-btn">Próximamente</a>
             </div>
         </div>
 
-        <!-- Placeholder iOS -->
-        <div class="flex items-center bg-white rounded-xl p-3 mb-3 shadow-sm border border-gray-100">
-            <div class="w-14 h-14 rounded-lg bg-gray-200 mr-4 flex items-center justify-center text-gray-400 text-xs font-bold">RPSP</div>
-            <div class="flex-grow">
-                <h3 class="font-semibold text-base leading-tight">Reavivados por su Palabra</h3>
-                <p class="text-xs text-gray-500 mb-2">Edgar J.P.</p>
-                <a href="#" class="inline-block bg-gray-100 text-gray-500 text-xs font-bold px-4 py-1.5 rounded-full pointer-events-none">
-                    Próximamente
-                </a>
+        <!-- Placeholder App 2 -->
+        <div class="app-card">
+            <img src="https://via.placeholder.com/60/eeeeee/999999?text=RPSP" alt="iOS Icon" class="app-icon">
+            <div class="app-info">
+                <div class="app-title">Reavivados por su Palabra</div>
+                <div class="app-developer">Edgar J.P.</div>
+                <a href="#" class="download-btn ios-btn">Próximamente</a>
             </div>
         </div>
 
-        <!-- Placeholder iOS -->
-        <div class="flex items-center bg-white rounded-xl p-3 mb-3 shadow-sm border border-gray-100">
-            <div class="w-14 h-14 rounded-lg bg-gray-200 mr-4 flex items-center justify-center text-gray-400 text-xs font-bold">ES</div>
-            <div class="flex-grow">
-                <h3 class="font-semibold text-base leading-tight">Escuela Sabática</h3>
-                <p class="text-xs text-gray-500 mb-2">Adventech</p>
-                <a href="#" class="inline-block bg-gray-100 text-gray-500 text-xs font-bold px-4 py-1.5 rounded-full pointer-events-none">
-                    Próximamente
-                </a>
+        <!-- Placeholder App 3 -->
+        <div class="app-card">
+            <img src="https://via.placeholder.com/60/eeeeee/999999?text=ES" alt="iOS Icon" class="app-icon">
+            <div class="app-info">
+                <div class="app-title">Escuela Sabática</div>
+                <div class="app-developer">Adventech</div>
+                <a href="#" class="download-btn ios-btn">Próximamente</a>
             </div>
         </div>
 
