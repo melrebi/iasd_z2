@@ -7,7 +7,7 @@
     <style>
         /* Reseteo y variables para un diseño limpio y blanco */
         :root {
-            --bg-color: #ffffff; /* Fondo completamente blanco */
+            --bg-color: #ffffff;
             --text-main: #222222;
             --text-muted: #666666;
             --border-color: #eaeaea;
@@ -19,13 +19,13 @@
             margin: 0;
             padding: 0;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            -webkit-tap-highlight-color: transparent; /* Quita el resalte azul en móviles */
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
             background-color: var(--bg-color);
             color: var(--text-main);
-            max-width: 800px; /* Un poco más ancho para la cuadrícula en PC */
+            max-width: 800px;
             margin: 0 auto;
             min-height: 100vh;
             display: flex;
@@ -84,7 +84,7 @@
             margin-right: auto;
         }
 
-        /* Cuadrícula de Aplicaciones (Estilo minimalista) */
+        /* Cuadrícula de Aplicaciones */
         .app-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
@@ -93,7 +93,7 @@
             margin: 0 auto;
         }
 
-        /* Estilo de cada App (Botón) */
+        /* Estilo de cada App */
         .app-item {
             display: flex;
             flex-direction: column;
@@ -115,11 +115,10 @@
         }
 
         .app-icon {
-            width: 65px;
-            height: 65px;
+            width: 70px;
+            height: 70px;
             object-fit: contain;
             margin-bottom: 15px;
-            /* Si las imágenes adjuntas son PNG transparentes, no necesitan fondo */
         }
 
         .app-title {
@@ -128,109 +127,72 @@
             text-align: center;
             line-height: 1.2;
         }
-
     </style>
 </head>
 <body>
 
-    <!-- Navegación -->
     <nav class="navbar">
         <a href="index.html" class="back-btn" aria-label="Volver al inicio">‹</a>
         <h1>ESTUDIO</h1>
     </nav>
 
-    <!-- Contenido -->
     <main class="content">
         <p class="instructions">Selecciona una aplicación. Se abrirá directamente si la tienes instalada, o te llevará a la tienda para descargarla.</p>
 
-        <!-- Cuadrícula de Apps -->
         <div class="app-grid">
-
             <!-- EGW Writings -->
-            <!-- Aquí debes reemplazar 'imagen1.png' por el nombre real o la ruta de la primera imagen adjunta -->
-            <div class="app-item" onclick="openApp('egw://', 'com.whiteestate.egwwritings', 'id-ios-placeholder')">
+            <div class="app-item" onclick="openApp('com.whiteestate.egwwritings', 'egw://', 'id-ios-placeholder')">
                 <img src="ellen_white.jpeg" alt="EGW Writings" class="app-icon">
                 <span class="app-title">EGW Writings</span>
             </div>
 
             <!-- Reavivados por su Palabra (RPSP) -->
-             <!-- Aquí debes reemplazar 'imagen2.png' por el nombre real o la ruta de la segunda imagen adjunta -->
-            <div class="app-item" onclick="openApp('rpsp://', 'com.edgarjp.rpsp', 'id-ios-placeholder')">
-                <img src="RPSP.jpeg" alt="Reavivados por su Palabra" class="app-icon">
+            <div class="app-item" onclick="openApp('com.edgarjp.rpsp', 'rpsp://', 'id-ios-placeholder')">
+                <img src="matutina.jpeg" alt="Reavivados por su Palabra" class="app-icon">
                 <span class="app-title">Reavivados</span>
             </div>
 
             <!-- Escuela Sabática -->
-             <!-- Aquí debes reemplazar 'imagen3.png' por el nombre real o la ruta de la tercera imagen adjunta -->
-            <div class="app-item" onclick="openApp('sabbathschool://', 'com.cryart.sabbathschool', 'id-ios-placeholder')">
+            <div class="app-item" onclick="openApp('com.cryart.sabbathschool', 'sabbathschool://', 'id-ios-placeholder')">
                 <img src="ES.jpeg" alt="Escuela Sabática" class="app-icon">
                 <span class="app-title">Escuela Sabática</span>
             </div>
-
         </div>
     </main>
 
-    <!-- Script de Deep Linking -->
     <script>
         /**
-         * Función para manejar el Deep Linking (Abrir app o ir a la tienda)
-         * @param {string} appScheme - El esquema URL de la app (ej: 'egw://')
-         * @param {string} androidPackage - El ID del paquete en Google Play
-         * @param {string} iosAppId - El ID de la app en la App Store (placeholder)
+         * Función mejorada para manejar el Deep Linking.
+         * Utiliza Intents nativos en Android para forzar la apertura de la app.
          */
-        function openApp(appScheme, androidPackage, iosAppId) {
-            
-            // 1. Detectar el sistema operativo
+        function openApp(androidPackage, iosScheme, iosAppId) {
             const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-            let isAndroid = /android/i.test(userAgent);
-            let isIOS = /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream;
+            const isAndroid = /android/i.test(userAgent);
+            const isIOS = /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream;
 
-            // Definir las URLs de las tiendas
             const playStoreUrl = 'https://play.google.com/store/apps/details?id=' + androidPackage;
-            const appStoreUrl = 'https://apps.apple.com/app/id' + iosAppId; // Placeholder
-
-            // Si es un navegador de escritorio, enviar a Google Play por defecto
-            if (!isAndroid && !isIOS) {
-                window.open(playStoreUrl, '_blank');
+            
+            if (isAndroid) {
+                // Generar URL de Intent de Android (Lanza la app, o hace fallback a la Play Store)
+                // action=android.intent.action.MAIN simula un toque en el ícono de la pantalla de inicio
+                const intentUrl = `intent://#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;package=${androidPackage};S.browser_fallback_url=${encodeURIComponent(playStoreUrl)};end;`;
+                
+                // Ejecutamos el intent nativo
+                window.location.href = intentUrl;
                 return;
             }
 
-            // 2. Intentar abrir el esquema de la App (Deep Link)
-            // Nota: Para que esto funcione perfecto, las apps deben tener configurado su URI Scheme.
-            // He puesto 'egw://', 'rpsp://', 'sabbathschool://' como ejemplos estándar.
-            let appUrl = appScheme; 
+            if (isIOS) {
+                // Lógica temporal para iOS hasta que tengamos los enlaces de la App Store
+                window.location.href = iosScheme; // Intenta abrir si tiene esquema
+                setTimeout(() => {
+                    alert("Enlace a la App Store de iOS próximamente.");
+                }, 1500);
+                return;
+            }
 
-            // Registrar el tiempo actual
-            const start = Date.now();
-            let timer;
-
-            // Función de fallback a la tienda
-            const fallbackToStore = () => {
-                const end = Date.now();
-                // Si pasaron menos de 2000ms, asumimos que la app no se abrió y lanzamos la tienda
-                if (end - start < 2000) {
-                    if (isAndroid) {
-                        window.location.href = playStoreUrl;
-                    } else if (isIOS) {
-                        // Descomentar esto cuando tengas los IDs de iOS reales
-                        // window.location.href = appStoreUrl; 
-                        alert("Enlace a iOS próximamente.");
-                    }
-                }
-            };
-
-            // Intentar abrir la app
-            window.location.href = appUrl;
-
-            // Configurar el temporizador para el fallback (1.5 segundos)
-            timer = setTimeout(fallbackToStore, 1500);
-
-            // Manejar si la página se oculta (significa que la app se abrió con éxito)
-            window.addEventListener('visibilitychange', function() {
-                if (document.hidden) {
-                    clearTimeout(timer);
-                }
-            });
+            // Si es una PC/Mac, abrir directamente la página de Google Play en una pestaña nueva
+            window.open(playStoreUrl, '_blank');
         }
     </script>
 </body>
