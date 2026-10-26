@@ -316,26 +316,12 @@
             <div class="capture-area" id="capture-area">
                 
                 <div class="anciano-banner">
-                    <span>Director(a) del Sábado:</span> 
+                    <!-- CORRECCIÓN: Título actualizado -->
+                    <span>DIRECTOR DE TURNO:</span> 
                     <span id="director-sabado">Cargando...</span>
                 </div>
 
-                <!-- MIÉRCOLES -->
-                <div class="day-row" id="row-miercoles">
-                    <div class="day-circle">
-                        <div class="day-name">MIÉ</div>
-                        <div class="day-number" id="num-miercoles">--</div>
-                        <div class="day-month" id="mes-miercoles">--</div>
-                    </div>
-                    <div class="day-content">
-                        <div class="detail-grid">
-                            <div class="detail-label">Predicador:</div>
-                            <div class="detail-value" id="pred-miercoles">--</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- SÁBADO -->
+                <!-- CORRECCIÓN: Sábado ahora va primero -->
                 <div class="day-row" id="row-sabado">
                     <div class="day-circle">
                         <div class="day-name">SÁB</div>
@@ -365,9 +351,23 @@
                     </div>
                 </div>
 
+                <!-- CORRECCIÓN: Miércoles ahora va después -->
+                <div class="day-row" id="row-miercoles">
+                    <div class="day-circle">
+                        <div class="day-name">MIÉ</div>
+                        <div class="day-number" id="num-miercoles">--</div>
+                        <div class="day-month" id="mes-miercoles">--</div>
+                    </div>
+                    <div class="day-content">
+                        <div class="detail-grid">
+                            <div class="detail-label">Predicador:</div>
+                            <div class="detail-value" id="pred-miercoles">--</div>
+                        </div>
+                    </div>
+                </div>
+
             </div> <!-- Fin capture-area -->
 
-            <!-- CONTENEDOR DE BOTONES -->
             <div class="share-container">
                 
                 <div class="dropdown">
@@ -388,14 +388,13 @@
                     </div>
                 </div>
                 
-                <!-- NUEVO ENLACE DIRECTO DE GOOGLE DRIVE PARA EL PDF -->
                 <a class="btn-action btn-pdf" href="https://drive.google.com/uc?export=download&id=1WwzU8hUNQHeNPgLz-NzEgAG_hDlSWe6l" target="_blank" rel="noopener noreferrer">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><polyline points="9 15 12 18 15 15"></polyline></svg>
                     <span>Itinerario PDF</span>
                 </a>
             </div>
 
-            <!-- LOGO UNAVOZ27 HASTA EL FINAL DE LA PÁGINA -->
+            <!-- LOGO UNAVOZ27 -->
             <div class="footer-logo">
                 <img src="ESP-logo1-1v27.png" alt="UnaVoz27">
             </div>
@@ -404,8 +403,8 @@
     </div>
 
     <script>
-        // Enlace de Apps Script funcionando correctamente
-        const API_URL = 'https://script.google.com/macros/s/AKfycbxrLT5HCUdyrG2ymEwu1x1mE8O0jxWHuA1bpnHEo4HNUxmVsoTtCTcsjFrNOmCOli67Fg/exec';    
+        // PEGA TU ENLACE AQUÍ
+        const API_URL = 'https://script.google.com/macros/s/AKfycbxrLT5HCUdyrG2ymEwu1x1mE8O0jxWHuA1bpnHEo4HNUxmVsoTtCTcsjFrNOmC0li67Fg/exec';    
         
         let semanasData = [];
 
@@ -442,7 +441,7 @@
                 try {
                     semanasData = JSON.parse(texto);
                 } catch (e) {
-                    throw new Error("Google devolvió una página web en lugar de datos. Revisa que el acceso sea a 'Cualquier persona' en Apps Script.");
+                    throw new Error("Error al leer datos. Revisa la actualización en Apps Script.");
                 }
                 
                 if (semanasData.length > 0) {
@@ -479,13 +478,14 @@
                 const option = document.createElement('option');
                 option.value = index;
                 
+                // CORRECCIÓN: El texto del menú ahora pone Sábado primero y Miércoles después
                 let texto = "";
-                if(semana.miercoles && semana.sabado) {
-                    texto = `${semana.miercoles.diaNumero} ${semana.miercoles.mes.substring(0,3)} - ${semana.sabado.diaNumero} ${semana.sabado.mes.substring(0,3)}`;
-                } else if (semana.miercoles) {
-                    texto = `Miércoles ${semana.miercoles.diaNumero} ${semana.miercoles.mes.substring(0,3)}`;
+                if(semana.sabado && semana.miercoles) {
+                    texto = `${semana.sabado.diaNumero} ${semana.sabado.mes.substring(0,3)} - ${semana.miercoles.diaNumero} ${semana.miercoles.mes.substring(0,3)}`;
                 } else if (semana.sabado) {
                     texto = `Sábado ${semana.sabado.diaNumero} ${semana.sabado.mes.substring(0,3)}`;
+                } else if (semana.miercoles) {
+                    texto = `Miércoles ${semana.miercoles.diaNumero} ${semana.miercoles.mes.substring(0,3)}`;
                 }
 
                 option.textContent = texto;
@@ -505,16 +505,7 @@
 
             document.getElementById('director-sabado').textContent = semana.sabado ? (semana.sabado.director || '--') : '--';
 
-            const divMiercoles = document.getElementById('row-miercoles');
-            if(semana.miercoles) {
-                divMiercoles.style.display = 'flex';
-                document.getElementById('num-miercoles').textContent = semana.miercoles.diaNumero;
-                document.getElementById('mes-miercoles').textContent = semana.miercoles.mes.substring(0,3);
-                document.getElementById('pred-miercoles').textContent = semana.miercoles.predicador || '--';
-            } else {
-                divMiercoles.style.display = 'none';
-            }
-
+            // Tarjeta Sábado (Ahora se llena primero)
             const divSabado = document.getElementById('row-sabado');
             if(semana.sabado) {
                 divSabado.style.display = 'flex';
@@ -528,6 +519,17 @@
                 document.getElementById('sociedad-jovenes').textContent = semana.sabado.sociedad_jovenes || '--';
             } else {
                 divSabado.style.display = 'none';
+            }
+
+            // Tarjeta Miércoles (Ahora se llena de segundo)
+            const divMiercoles = document.getElementById('row-miercoles');
+            if(semana.miercoles) {
+                divMiercoles.style.display = 'flex';
+                document.getElementById('num-miercoles').textContent = semana.miercoles.diaNumero;
+                document.getElementById('mes-miercoles').textContent = semana.miercoles.mes.substring(0,3);
+                document.getElementById('pred-miercoles').textContent = semana.miercoles.predicador || '--';
+            } else {
+                divMiercoles.style.display = 'none';
             }
         }
 
@@ -624,21 +626,23 @@
             texto += `*ITINERARIO DE ACTIVIDADES*\n`;
             texto += `----------------------------------\n\n`;
 
-            if(semana.miercoles) {
-                texto += `📖 *MIÉRCOLES ${semana.miercoles.diaNumero} DE ${semana.miercoles.mes}*\n`;
-                if(semana.miercoles.predicador) texto += `🔹 Predicador: ${semana.miercoles.predicador}\n`;
-                texto += `\n`;
-            }
-
+            // CORRECCIÓN: El texto generado en WhatsApp ahora prioriza al Sábado
             if(semana.sabado) {
                 texto += `📖 *SÁBADO ${semana.sabado.diaNumero} DE ${semana.sabado.mes}*\n`;
-                if(semana.sabado.director) texto += `🔹 Director(a): ${semana.sabado.director}\n`;
+                if(semana.sabado.director) texto += `🔹 Director de Turno: ${semana.sabado.director}\n`;
                 if(semana.sabado.predicador) texto += `🔹 Culto Divino: ${semana.sabado.predicador}\n`;
                 if(semana.sabado.programa_es) texto += `🔹 Prog. Esc. Sabática: ${semana.sabado.programa_es}\n`;
                 if(semana.sabado.maestro_es) texto += `🔹 Maestro Esc. Sab.: ${semana.sabado.maestro_es}\n`;
                 if(semana.sabado.maestra_ninos) texto += `🔹 Maestra de Niños: ${semana.sabado.maestra_ninos}\n`;
                 if(semana.sabado.preludio) texto += `🔹 Preludio: ${semana.sabado.preludio}\n`;
                 if(semana.sabado.sociedad_jovenes) texto += `🔹 Soc. Jóvenes: ${semana.sabado.sociedad_jovenes}\n`;
+                texto += `\n`;
+            }
+
+            if(semana.miercoles) {
+                texto += `📖 *MIÉRCOLES ${semana.miercoles.diaNumero} DE ${semana.miercoles.mes}*\n`;
+                if(semana.miercoles.predicador) texto += `🔹 Predicador: ${semana.miercoles.predicador}\n`;
+                texto += `\n`;
             }
 
             if (navigator.share) {
