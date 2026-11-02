@@ -8,9 +8,7 @@
     <style>
         /* --- PALETA DE COLORES INSTITUCIONAL (DENIM) --- */
         :root {
-            /* Base Denim según paleta */
             --color-denim: #2f557f; 
-            /* Variaciones sobrias para contraste */
             --color-denim-dark: #1b334d; 
             --color-denim-light: #4673a6; 
             --color-bg: #eef2f6;
@@ -20,27 +18,25 @@
         }
 
         body {
-            /* Uso prioritario de Advent Sans */
             font-family: 'Advent Sans', 'Noto Sans', 'Open Sans', Arial, sans-serif;
             background-color: var(--color-bg);
             color: var(--text-dark);
             margin: 0;
             padding: 0;
+            overflow-x: hidden; /* Evita que la pantalla se mueva a los lados al deslizar */
         }
 
-        /* --- ENCABEZADO Y LOGO (Alineado a la izquierda) --- */
         header {
             background-color: #ffffff;
             padding: 20px 30px;
             border-bottom: 3px solid var(--color-denim-dark);
-            text-align: left; /* Cambio al lado izquierdo */
+            text-align: left;
         }
 
         header img {
             max-width: 250px;
             width: 100%;
             height: auto;
-            /* Eliminado el margin auto para que no se centre */
         }
 
         .container {
@@ -50,9 +46,18 @@
             padding-bottom: 50px;
         }
 
-        .controls {
-            text-align: center;
+        /* --- CONTROLES Y NAVEGACIÓN --- */
+        .controls-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
             margin-bottom: 25px;
+        }
+
+        .controls {
+            flex-grow: 1;
+            max-width: 350px;
         }
 
         select {
@@ -64,7 +69,6 @@
             background-color: #fff;
             color: var(--text-dark);
             width: 100%;
-            max-width: 350px;
             cursor: pointer;
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
@@ -75,6 +79,35 @@
             background-color: var(--color-bg);
         }
 
+        .btn-nav {
+            background-color: var(--color-denim);
+            color: var(--text-white);
+            border: none;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(47, 85, 127, 0.3);
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .btn-nav:hover {
+            background-color: var(--color-denim-dark);
+            transform: scale(1.05);
+        }
+
+        .btn-nav:disabled {
+            background-color: #c0cddb;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* --- ÁREA PRINCIPAL --- */
         .capture-area {
             background-color: var(--color-bg);
             padding: 20px 10px;
@@ -292,7 +325,7 @@
         }
 
         @media (max-width: 500px) {
-            header { text-align: center; justify-content: center; } /* Se centra en móviles pequeños */
+            header { text-align: center; justify-content: center; } 
             header img { max-width: 200px; margin: 0 auto; }
             .day-circle { width: 90px; height: 90px; }
             .day-circle .day-number { font-size: 2rem; }
@@ -302,6 +335,10 @@
             .detail-label { text-align: left; font-size: 0.85rem; margin-top: 5px; color: var(--text-label);}
             .detail-value { font-size: 1rem; margin-bottom: 5px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 5px;}
             .detail-value:last-child { border-bottom: none; }
+            
+            /* Ajuste de los controles en móvil */
+            .btn-nav { width: 40px; height: 40px; }
+            .controls-wrapper { gap: 10px; }
         }
     </style>
 </head>
@@ -313,10 +350,23 @@
 
     <div class="container">
         
-        <div class="controls">
-            <select id="week-selector">
-                <option value="">Cargando semanas...</option>
-            </select>
+        <!-- CONTROLES CON BOTONES DE NAVEGACIÓN -->
+        <div class="controls-wrapper">
+            <!-- Botón Anterior -->
+            <button id="btn-prev" class="btn-nav" onclick="cambiarSemana(-1)" disabled>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            </button>
+            
+            <div class="controls">
+                <select id="week-selector">
+                    <option value="">Cargando semanas...</option>
+                </select>
+            </div>
+
+            <!-- Botón Siguiente -->
+            <button id="btn-next" class="btn-nav" onclick="cambiarSemana(1)" disabled>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
         </div>
 
         <div id="main-content" style="display:none;">
@@ -410,6 +460,7 @@
     </div>
 
     <script>
+        // PEGA TU ENLACE NUEVO AQUÍ:
         const API_URL = 'https://script.google.com/macros/s/AKfycbxByeYWkh0FPot2ksZR249dF-W2vjDhcookfZy3KLJPfRpA4Q7c1-ZzFpwPpBY2DF7SHg/exec';    
         
         let semanasData = [];
@@ -505,6 +556,9 @@
         }
 
         function mostrarSemana(index) {
+            index = parseInt(index);
+            if(isNaN(index)) return;
+            
             const semana = semanasData[index];
             if(!semana) return;
 
@@ -534,6 +588,10 @@
             } else {
                 divMiercoles.style.display = 'none';
             }
+
+            // Habilitar/Deshabilitar botones de navegación según la posición
+            document.getElementById('btn-prev').disabled = (index === 0);
+            document.getElementById('btn-next').disabled = (index === semanasData.length - 1);
         }
 
         function seleccionarSemanaActual() {
@@ -542,13 +600,11 @@
             let indexSeleccionado = 0;
             
             for(let i = 0; i < semanasData.length; i++) {
-                // CORRECCIÓN LÓGICA DE FECHA: Usamos el miércoles como límite de cierre de semana
                 let eventoCierre = semanasData[i].miercoles || semanasData[i].sabado;
                 
                 if(eventoCierre) {
                     let mesIdx = mesesMap[eventoCierre.mes];
                     let dia = parseInt(eventoCierre.diaNumero);
-                    // La semana es válida hasta el miércoles a las 23:59:59
                     let fechaCierre = new Date(currentYear, mesIdx, dia, 23, 59, 59);
                     
                     if(hoy <= fechaCierre) {
@@ -561,6 +617,51 @@
             document.getElementById('week-selector').value = indexSeleccionado;
             mostrarSemana(indexSeleccionado);
         }
+
+        // --- LÓGICA DE NAVEGACIÓN (BOTONES Y SWIPE) ---
+        function cambiarSemana(direccion) {
+            const selector = document.getElementById('week-selector');
+            if(selector.options.length <= 1) return; 
+
+            let currentIndex = parseInt(selector.value);
+            if(isNaN(currentIndex)) currentIndex = 0;
+
+            let nuevoIndex = currentIndex + direccion;
+            if(nuevoIndex < 0) nuevoIndex = 0;
+            if(nuevoIndex >= semanasData.length) nuevoIndex = semanasData.length - 1;
+
+            if(nuevoIndex !== currentIndex) {
+                selector.value = nuevoIndex;
+                mostrarSemana(nuevoIndex);
+            }
+        }
+
+        // Variables para detectar deslizamiento (Swipe)
+        let touchstartX = 0;
+        let touchendX = 0;
+        
+        function manejarSwipe() {
+            const umbral = 50; // Distancia mínima en píxeles para ser considerado un swipe
+            if (touchendX < touchstartX - umbral) {
+                // Deslizó hacia la izquierda -> Semana Siguiente
+                cambiarSemana(1);
+            }
+            if (touchendX > touchstartX + umbral) {
+                // Deslizó hacia la derecha -> Semana Anterior
+                cambiarSemana(-1);
+            }
+        }
+
+        // Aplicamos el escuchador de deslizamientos al área de contenido
+        document.addEventListener('touchstart', e => {
+            touchstartX = e.changedTouches[0].screenX;
+        }, {passive: true});
+
+        document.addEventListener('touchend', e => {
+            touchendX = e.changedTouches[0].screenX;
+            manejarSwipe();
+        }, {passive: true});
+        // --- FIN LÓGICA DE NAVEGACIÓN ---
 
         async function compartirComoImagen() {
             toggleDropdown();
