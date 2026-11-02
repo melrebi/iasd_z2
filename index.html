@@ -6,42 +6,46 @@
     <title>Itinerario IASD Zona 2</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
-        /* --- PALETA DE COLORES GOTHIC NOIR --- */
+        /* --- PALETA DE COLORES INSTITUCIONAL (DENIM) --- */
         :root {
-            --gn-black: #000000;
-            --gn-light-grey: #D1D0D0;
-            --gn-mauve: #988686;
-            --gn-dark-brown: #5C4E4E;
+            /* Base Denim según paleta */
+            --color-denim: #2f557f; 
+            /* Variaciones sobrias para contraste */
+            --color-denim-dark: #1b334d; 
+            --color-denim-light: #4673a6; 
+            --color-bg: #eef2f6;
             --text-white: #ffffff;
-            --text-light-grey: #e0e0e0; 
+            --text-label: #b6cde6;
+            --text-dark: #112233;
         }
 
         body {
-            font-family: 'Noto Sans', 'Open Sans', Arial, sans-serif;
-            background-color: var(--gn-light-grey);
-            color: var(--gn-black);
+            /* Uso prioritario de Advent Sans */
+            font-family: 'Advent Sans', 'Noto Sans', 'Open Sans', Arial, sans-serif;
+            background-color: var(--color-bg);
+            color: var(--text-dark);
             margin: 0;
             padding: 0;
         }
 
+        /* --- ENCABEZADO Y LOGO (Alineado a la izquierda) --- */
         header {
             background-color: #ffffff;
-            text-align: center;
-            padding: 30px 20px 20px 20px;
-            border-bottom: 3px solid var(--gn-black);
+            padding: 20px 30px;
+            border-bottom: 3px solid var(--color-denim-dark);
+            text-align: left; /* Cambio al lado izquierdo */
         }
 
         header img {
             max-width: 250px;
             width: 100%;
             height: auto;
-            margin: 0 auto;
-            display: block;
+            /* Eliminado el margin auto para que no se centre */
         }
 
         .container {
             max-width: 800px;
-            margin: 20px auto;
+            margin: 25px auto;
             padding: 0 15px;
             padding-bottom: 50px;
         }
@@ -54,42 +58,43 @@
         select {
             padding: 12px 15px;
             font-size: 1.1rem;
+            font-family: 'Advent Sans', 'Noto Sans', sans-serif;
             border-radius: 8px;
-            border: 2px solid var(--gn-dark-brown);
+            border: 2px solid var(--color-denim-light);
             background-color: #fff;
-            color: var(--gn-black);
+            color: var(--text-dark);
             width: 100%;
             max-width: 350px;
             cursor: pointer;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
         
         select optgroup {
             font-weight: bold;
-            color: var(--gn-black);
-            background-color: var(--gn-light-grey);
+            color: var(--color-denim-dark);
+            background-color: var(--color-bg);
         }
 
         .capture-area {
-            background-color: var(--gn-light-grey);
+            background-color: var(--color-bg);
             padding: 20px 10px;
             border-radius: 8px;
         }
 
         .anciano-banner {
-            background-color: var(--gn-mauve);
-            color: var(--gn-black);
+            background-color: var(--color-denim-light);
+            color: var(--text-white);
             padding: 15px 20px;
             border-radius: 8px;
             text-align: center;
             font-size: 1.2rem;
             margin-bottom: 30px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.15);
-            border-bottom: 3px solid var(--gn-dark-brown);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-bottom: 3px solid var(--color-denim-dark);
         }
 
         .anciano-banner span:first-child {
-            color: var(--gn-black);
+            color: var(--color-bg);
             font-weight: normal;
             font-size: 1rem;
             text-transform: uppercase;
@@ -109,7 +114,7 @@
         }
 
         .day-circle {
-            background-color: var(--gn-black);
+            background-color: var(--color-denim-dark);
             color: var(--text-white);
             width: 110px;
             height: 110px;
@@ -120,9 +125,9 @@
             align-items: center;
             position: relative;
             z-index: 10; 
-            box-shadow: 4px 0px 10px rgba(0,0,0,0.3);
+            box-shadow: 4px 0px 10px rgba(0,0,0,0.2);
             flex-shrink: 0;
-            border: 2px solid var(--gn-light-grey);
+            border: 2px solid var(--color-bg);
         }
 
         .day-circle .day-name {
@@ -131,7 +136,7 @@
             letter-spacing: 1px;
             text-transform: uppercase;
             margin-bottom: 2px;
-            color: var(--gn-light-grey);
+            color: var(--color-bg);
         }
 
         .day-circle .day-number {
@@ -144,11 +149,11 @@
             font-size: 0.8rem;
             letter-spacing: 1px;
             text-transform: uppercase;
-            color: var(--gn-light-grey);
+            color: var(--color-bg);
         }
 
         .day-content {
-            background-color: var(--gn-dark-brown);
+            background-color: var(--color-denim);
             color: var(--text-white);
             margin-left: -55px;
             padding: 25px 20px 25px 70px;
@@ -159,7 +164,7 @@
             min-height: 90px;
             display: flex;
             align-items: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.15);
         }
 
         .detail-grid {
@@ -170,7 +175,7 @@
         }
 
         .detail-label {
-            color: var(--text-light-grey);
+            color: var(--text-label);
             font-weight: bold;
             text-align: right;
             font-size: 1rem;
@@ -195,6 +200,7 @@
             border: none;
             padding: 12px 24px;
             font-size: 1.1rem;
+            font-family: 'Advent Sans', 'Noto Sans', sans-serif;
             font-weight: bold;
             border-radius: 50px;
             cursor: pointer;
@@ -207,25 +213,25 @@
         }
 
         .btn-share-main {
-            background-color: var(--gn-black);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            background-color: var(--color-denim);
+            box-shadow: 0 4px 15px rgba(47, 85, 127, 0.4);
         }
         .btn-share-main:hover { 
-            background-color: var(--gn-dark-brown); 
+            background-color: var(--color-denim-dark); 
             transform: translateY(-2px); 
         }
 
         .btn-pdf {
-            background-color: var(--gn-dark-brown);
-            box-shadow: 0 4px 15px rgba(92, 78, 78, 0.4);
+            background-color: var(--color-denim-dark);
+            box-shadow: 0 4px 15px rgba(27, 51, 77, 0.4);
         }
         .btn-pdf:hover { 
-            background-color: var(--gn-black); 
+            background-color: var(--color-denim); 
             transform: translateY(-2px); 
         }
 
         .btn-action:disabled {
-            background-color: var(--gn-mauve);
+            background-color: #aab;
             cursor: not-allowed;
             transform: none;
             box-shadow: none;
@@ -249,15 +255,16 @@
             border-radius: 12px;
             z-index: 100;
             overflow: hidden;
-            border: 1px solid var(--gn-light-grey);
+            border: 1px solid var(--color-bg);
         }
 
         .dropdown-content.show { display: flex; flex-direction: column; }
 
         .dropdown-item {
             padding: 15px 20px;
-            color: var(--gn-black);
+            color: var(--text-dark);
             font-size: 1rem;
+            font-family: 'Advent Sans', 'Noto Sans', sans-serif;
             font-weight: bold;
             text-decoration: none;
             display: flex;
@@ -269,8 +276,8 @@
         }
 
         .dropdown-item:last-child { border-bottom: none; }
-        .dropdown-item:hover { background-color: var(--gn-light-grey); }
-        .dropdown-item svg { color: var(--gn-dark-brown); }
+        .dropdown-item:hover { background-color: var(--color-bg); }
+        .dropdown-item svg { color: var(--color-denim); }
 
         /* --- Footer Logo --- */
         .footer-logo {
@@ -285,13 +292,14 @@
         }
 
         @media (max-width: 500px) {
-            header img { max-width: 200px; }
+            header { text-align: center; justify-content: center; } /* Se centra en móviles pequeños */
+            header img { max-width: 200px; margin: 0 auto; }
             .day-circle { width: 90px; height: 90px; }
             .day-circle .day-number { font-size: 2rem; }
             .day-circle .day-name { font-size: 0.9rem; }
             .day-content { margin-left: -45px; padding-left: 55px; }
             .detail-grid { grid-template-columns: 1fr; gap: 2px; }
-            .detail-label { text-align: left; font-size: 0.85rem; margin-top: 5px; color: var(--gn-mauve);}
+            .detail-label { text-align: left; font-size: 0.85rem; margin-top: 5px; color: var(--text-label);}
             .detail-value { font-size: 1rem; margin-bottom: 5px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 5px;}
             .detail-value:last-child { border-bottom: none; }
         }
@@ -316,12 +324,11 @@
             <div class="capture-area" id="capture-area">
                 
                 <div class="anciano-banner">
-                    <!-- CORRECCIÓN: Título actualizado -->
                     <span>DIRECTOR DE TURNO:</span> 
                     <span id="director-sabado">Cargando...</span>
                 </div>
 
-                <!-- CORRECCIÓN: Sábado ahora va primero -->
+                <!-- SÁBADO -->
                 <div class="day-row" id="row-sabado">
                     <div class="day-circle">
                         <div class="day-name">SÁB</div>
@@ -351,7 +358,7 @@
                     </div>
                 </div>
 
-                <!-- CORRECCIÓN: Miércoles ahora va después -->
+                <!-- MIÉRCOLES -->
                 <div class="day-row" id="row-miercoles">
                     <div class="day-circle">
                         <div class="day-name">MIÉ</div>
@@ -403,8 +410,7 @@
     </div>
 
     <script>
-        // PEGA TU ENLACE AQUÍ
-        const API_URL = 'https://script.google.com/macros/s/AKfycbxByeYWkh0FPot2ksZR249dF-W2vjDhcookfZy3KLJPfRpA4Q7c1-ZzFpwPpBY2DF7SHg/exec';    
+        const API_URL = 'https://script.google.com/macros/s/AKfycbxrLT5HCUdyrG2ymEwu1x1mE8O0jxWHuA1bpnHEo4HNUxmVsoTtCTcsjFrNOmC0li67Fg/exec';    
         
         let semanasData = [];
 
@@ -478,7 +484,6 @@
                 const option = document.createElement('option');
                 option.value = index;
                 
-                // CORRECCIÓN: El texto del menú ahora pone Sábado primero y Miércoles después
                 let texto = "";
                 if(semana.sabado && semana.miercoles) {
                     texto = `${semana.sabado.diaNumero} ${semana.sabado.mes.substring(0,3)} - ${semana.miercoles.diaNumero} ${semana.miercoles.mes.substring(0,3)}`;
@@ -505,7 +510,6 @@
 
             document.getElementById('director-sabado').textContent = semana.sabado ? (semana.sabado.director || '--') : '--';
 
-            // Tarjeta Sábado (Ahora se llena primero)
             const divSabado = document.getElementById('row-sabado');
             if(semana.sabado) {
                 divSabado.style.display = 'flex';
@@ -521,7 +525,6 @@
                 divSabado.style.display = 'none';
             }
 
-            // Tarjeta Miércoles (Ahora se llena de segundo)
             const divMiercoles = document.getElementById('row-miercoles');
             if(semana.miercoles) {
                 divMiercoles.style.display = 'flex';
@@ -539,13 +542,16 @@
             let indexSeleccionado = 0;
             
             for(let i = 0; i < semanasData.length; i++) {
-                let evento = semanasData[i].sabado || semanasData[i].miercoles;
-                if(evento) {
-                    let mesIdx = mesesMap[evento.mes];
-                    let dia = parseInt(evento.diaNumero);
-                    let fechaEvento = new Date(currentYear, mesIdx, dia, 23, 59, 59);
+                // CORRECCIÓN LÓGICA DE FECHA: Usamos el miércoles como límite de cierre de semana
+                let eventoCierre = semanasData[i].miercoles || semanasData[i].sabado;
+                
+                if(eventoCierre) {
+                    let mesIdx = mesesMap[eventoCierre.mes];
+                    let dia = parseInt(eventoCierre.diaNumero);
+                    // La semana es válida hasta el miércoles a las 23:59:59
+                    let fechaCierre = new Date(currentYear, mesIdx, dia, 23, 59, 59);
                     
-                    if(hoy <= fechaEvento) {
+                    if(hoy <= fechaCierre) {
                         indexSeleccionado = i;
                         break; 
                     }
@@ -571,7 +577,7 @@
             try {
                 const canvas = await html2canvas(areaCaptura, {
                     scale: 2, 
-                    backgroundColor: '#D1D0D0', 
+                    backgroundColor: '#eef2f6', 
                     logging: false,
                     useCORS: true
                 });
@@ -596,9 +602,9 @@
                     nuevaVentana.document.write(`
                         <html>
                             <head><title>Copiar Itinerario</title></head>
-                            <body style="margin:0; display:flex; flex-direction:column; align-items:center; background:#000000; color:white; font-family:sans-serif; justify-content:center; height:100vh;">
+                            <body style="margin:0; display:flex; flex-direction:column; align-items:center; background:#1b334d; color:white; font-family:sans-serif; justify-content:center; height:100vh;">
                                 <img src="${imageUrl}" alt="Itinerario" style="max-width:90%; max-height:80vh; border-radius:10px;">
-                                <p style="background:rgba(92, 78, 78, 0.8); padding:15px; border-radius:10px;">Haz Clic Derecho -> <strong>"Copiar imagen"</strong> y pégala en WhatsApp.</p>
+                                <p style="background:rgba(47, 85, 127, 0.8); padding:15px; border-radius:10px;">Haz Clic Derecho -> <strong>"Copiar imagen"</strong> y pégala en WhatsApp.</p>
                             </body>
                         </html>
                     `);
@@ -626,7 +632,6 @@
             texto += `*ITINERARIO DE ACTIVIDADES*\n`;
             texto += `----------------------------------\n\n`;
 
-            // CORRECCIÓN: El texto generado en WhatsApp ahora prioriza al Sábado
             if(semana.sabado) {
                 texto += `📖 *SÁBADO ${semana.sabado.diaNumero} DE ${semana.sabado.mes}*\n`;
                 if(semana.sabado.director) texto += `🔹 Director de Turno: ${semana.sabado.director}\n`;
